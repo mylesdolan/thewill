@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node willserver/Server.js",
+    "server": "nodemon willserver/Server.js",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix willclient && npm run build --prefix willclient"
   },
   "keywords": [],
