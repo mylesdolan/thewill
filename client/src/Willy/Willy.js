@@ -8,6 +8,7 @@ class Willy extends Component {
         super(props);
         this.onSubmit = this.onSubmit.bind(this);
         this.onChangeInput = this.onChangeInput.bind(this);
+        this.doCalcs= this.doCalcs.bind(this);
         this.state = {
             mylesInit:'1',
             karenInit:'2',
@@ -66,6 +67,32 @@ axios.post('/api/will',this.state.everythingObj)
 
     }
 
+doCalcs()
+{
+    //(k+kp)+(m+mp)+(ma+map)+(ed+edp)=tot
+    let allinint=this.state.everythingObj;
+
+    let totalAll=Number(allinint.Karen)
+        +Number(allinint.Matth)
+        +Number(allinint.Eddie)
+        +Number(allinint.Myles)
+    +Number(allinint.Granite)
+    +Number(allinint.Belmore)
+    +Number(allinint.Cash);
+
+    let equaldiv=totalAll/4;
+
+    let kar_get=equaldiv-allinint.Karen;
+    let myl_get=equaldiv-allinint.Myles;
+    let mat_get=equaldiv-allinint.Matth;
+    let edd_get=equaldiv-allinint.Eddie;
+
+    let reportString='Karen gets '+kar_get+'; Myles gets '+myl_get+'; Matthew gets '+mat_get+'; Eddie gets '+edd_get;
+    console.log('allin',equaldiv);
+    console.log('allin',allinint);
+    console.log('allin',reportString);
+}
+
 
 
     render() {
@@ -75,6 +102,8 @@ axios.post('/api/will',this.state.everythingObj)
         let Matthinit=this.state.everthing['matth'];
         let Eddieinit=this.state.everthing['eddie'];
         let Graniteinit=this.state.everthing['granite'];
+        let Belmoreinit=this.state.everthing['belmore'];
+        let Cashinit=this.state.everthing['cash'];
     return(
         <div>
         Hello
@@ -149,6 +178,28 @@ axios.post('/api/will',this.state.everythingObj)
                                                 />
                                                 </label>
                                                 </div>
+                        <div className='form-group form-inline'>
+
+                            <label htmlFor={'Belmore'}>Belmore:
+                                <input
+                                    name={'Belmore'}
+                                    value={Belmoreinit}
+                                    id={'Belmore'}
+                                    onChange={this.onChangeInput}
+                                />
+                            </label>
+                        </div>
+                        <div className='form-group form-inline'>
+
+                            <label htmlFor={'Cash'}>Cash:
+                                <input
+                                    name={'Cash'}
+                                    value={Cashinit}
+                                    id={'Cash'}
+                                    onChange={this.onChangeInput}
+                                />
+                            </label>
+                        </div>
 
 
                                             </Col>
@@ -161,7 +212,7 @@ axios.post('/api/will',this.state.everythingObj)
                 <input type="submit" value="Save values"/>
             </Container>
             </form>
-
+            <button onClick={this.doCalcs}>Do Calculations!</button>
                 </div>
 
 
