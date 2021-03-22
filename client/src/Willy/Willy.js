@@ -15,7 +15,8 @@ class Willy extends Component {
             eddieInit:'3',
             matthInit:'4',
             everthing:[],
-            everythingObj:{}
+            everythingObj:{},
+            reportString:''
         }
 
 
@@ -87,7 +88,8 @@ doCalcs()
     let mat_get=equaldiv-allinint.Matth;
     let edd_get=equaldiv-allinint.Eddie;
 
-    let reportString='Karen gets '+kar_get+'; Myles gets '+myl_get+'; Matthew gets '+mat_get+'; Eddie gets '+edd_get;
+    let reportString='Karen gets '+kar_get+' Myles gets '+myl_get+' Matthew gets '+mat_get+' Eddie gets '+edd_get;
+    this.setState({reportString:{reportString}});
     console.log('allin',equaldiv);
     console.log('allin',allinint);
     console.log('allin',reportString);
@@ -104,6 +106,8 @@ doCalcs()
         let Graniteinit=this.state.everthing['granite'];
         let Belmoreinit=this.state.everthing['belmore'];
         let Cashinit=this.state.everthing['cash'];
+        let reportstring= this.state.reportString.reportString;
+        console.log('RS',reportstring);
     return(
         <div>
         Hello
@@ -205,9 +209,13 @@ doCalcs()
                                             </Col>
                 </Row>
                 <Row>
-                    <Col sm>sm=true</Col>
-                    <Col sm>sm=true</Col>
-                    <Col sm>sm=true</Col>
+
+                    <Col sm>xxxx</Col>
+                    <Col sm><div>
+
+                        {reportstring}
+                    </div></Col>
+                    <Col sm>xxxx</Col>
                 </Row>
                 <input type="submit" value="Save values"/>
             </Container>
