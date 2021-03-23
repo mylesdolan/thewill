@@ -3,7 +3,7 @@ const router = express.Router();
 const WillTable = require('../../models/WillTable');
 
 router.post('/', (req, res) => {
-    const errors = 'hiFred';
+    const errors = 'hiFredyu';
     console.log('IamWill2',req);
     console.log('IamWill3',req.body);
     const willFields={};
@@ -13,8 +13,9 @@ router.post('/', (req, res) => {
     if (req.body.Eddie) willFields.Eddie = req.body.Eddie;
     if (req.body.Granite) willFields.Granite = req.body.Granite;
     if (req.body.Belmore) willFields.Belmore = req.body.Belmore;
+    if (req.body.comment) willFields.Commentary = req.body.comment;
     willFields.BelmoreSellOut=true;
-    willFields.Commentary='fill this in';
+   // willFields.Commentary='fill this in';
 
     new WillTable(willFields).save().then(will => res.json(will));
 
