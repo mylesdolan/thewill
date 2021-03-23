@@ -219,16 +219,18 @@ class Willy extends Component {
         let reportstring= this.state.reportString.reportString;
         console.log('RS',reportstring);
         return(
-            <div>
-           Work in Progress.... No legal standing what so ever.
+            <div style={{fontSize:"12px"}}>
+                <br/>
+           Work in Progress.No legal standing what so ever. Enter values in thousands eg 50 for 50K. All monenetary boxes must be filled.<br/>
+                <br/>    <button onClick={this.doCalcs}>Do Calculations!</button>
                 <form onSubmit={this.onSubmit}>
-                    Enter and submit you values in 100 thousands  eg if you enter 50 that will be 50K. All monenetary boxes must be filled.
+
 
 
                     <Container>
                         <Row>
-                            <Col sm={5}>
-                                Initial Pressys <br/>
+                            <Col sm={3}>
+                               <b> Initial Pressys</b> <br/>
                                 <div className='form-group form-inline'>
 
                                     <label htmlFor={'karen'}>Karen:
@@ -279,7 +281,7 @@ class Willy extends Component {
 
 
                             </Col>
-                            <Col sm={4}>Assets <br/>
+                            <Col sm={4}><b>Assets</b> <br/>
                                 <div className='form-group form-inline'>
 
                                     <label htmlFor={'Granite'}>Granite:
@@ -353,7 +355,7 @@ class Willy extends Component {
                         {/*    <input type="submit" value="Save values"/>*/}
                     </Container>
                 </form>
-                <button onClick={this.doCalcs}>Do Calculations!</button>
+
             </div>
 
 
