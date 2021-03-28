@@ -3,6 +3,7 @@ import { Button, Col, Row,Container} from 'react-bootstrap';
 import axios from "axios";
 import './will.css';
 //import Container from 'react-bootstrap/Container'
+import { Link } from 'react-router-dom';
 class Willy extends Component {
     constructor(props) {
 
@@ -221,7 +222,9 @@ class Willy extends Component {
         return(
             <div style={{fontSize:"12px"}}>
                 <br/>
-           Work in Progress.No legal standing what so ever. Enter values in thousands eg 50 for 50K. All monenetary boxes must be filled.<br/>
+           Work in Progress. No legal standing what so ever. Enter values in thousands eg 50 for 50K. All monenetary boxes must be filled.<br/>
+        <Link to="/hello">Hello</Link>
+
                 <br/>    <button onClick={this.doCalcs}>Do Calculations!</button>
                 <form onSubmit={this.onSubmit}>
 
