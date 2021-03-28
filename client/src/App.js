@@ -10,7 +10,7 @@ const history = createHistory();
 //UA-63816631-2
 //G-E47GQBEYF1
 //267068258
-ReactGA.initialize('267068258', {debug: false /*process.env.NODE_ENV !== 'production'*/, titleCase: false});
+ReactGA.initialize('UA-106524816-3', {debug: false /*process.env.NODE_ENV !== 'production'*/, titleCase: false});
 //ReactGA.pageview(window.location.pathname + window.location.search);
 
 history.listen((location, action) => {
