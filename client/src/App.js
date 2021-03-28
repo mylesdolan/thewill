@@ -9,7 +9,8 @@ import createHistory from 'history/createBrowserHistory'
 const history = createHistory();
 //UA-63816631-2
 //G-E47GQBEYF1
-ReactGA.initialize('G-E47GQBEYF1', {debug: false /*process.env.NODE_ENV !== 'production'*/, titleCase: false});
+//267068258
+ReactGA.initialize('267068258', {debug: false /*process.env.NODE_ENV !== 'production'*/, titleCase: false});
 //ReactGA.pageview(window.location.pathname + window.location.search);
 
 history.listen((location, action) => {
