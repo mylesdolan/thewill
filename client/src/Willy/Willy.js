@@ -12,23 +12,76 @@ class Willy extends Component {
         this.onChangeInput = this.onChangeInput.bind(this);
         this.onChangeBStreetOwn = this.onChangeBStreetOwn.bind(this);
         this.doCalcs= this.doCalcs.bind(this);
+        this.getCookie= this.getCookie.bind(this);
+        this.setCookie= this.setCookie.bind(this);
+
         this.state = {
-            mylesInit:'1',
-            karenInit:'2',
-            eddieInit:'3',
-            matthInit:'4',
-            everthing:[],
-            everythingObj:{},
-            reportString:'',
-            bscount:'0'
+            mylesInit: '1',
+            karenInit: '2',
+            eddieInit: '3',
+            matthInit: '4',
+            everthing: [],
+            everythingObj: {},
+            reportString: '',
+            bscount: '0',
+            rowsReturned: []
         }
+
 
 
     }
 
     componentDidMount() {
         this.state.everythingObj['Belbuyer'] = 'notfamily';
+        this.checkCookie();
+      // this.state.rowsReturned=this.getRows();
+        this.getRows();
     }
+
+    getRows(){
+        axios.get('http://localhost:3001/api/will/all')
+
+            .then( response =>{console.log("xxxxxxxxxxxxxxxxxxxxxtwit",response.data)
+                //this.LoopFeedback(response.data)
+                //this.state.rowsReturned=this.getRows();
+                this.setState({rowsReturned:response.data});
+                    //.state.rowsReturned=response.data;
+            })
+            .catch((err) => {console.log("err",err)})
+        ;
+
+    }
+
+    LoopFeedback = (dataRecords) => {
+        console.log('dataRecords',dataRecords);
+        //console.log('dataRecords',dataRecords);
+
+        return (
+            <div>
+
+            {
+                dataRecords.map((TempObjMapped, Index) => {
+                        return (
+                            < div >
+                            < textarea
+                        value = {TempObjMapped.Commentary}
+                    rows={12}
+                    cols={50}
+                        />
+                        < /div>
+                    )
+                    }
+                )
+            }
+            </div>
+        )
+        }
+
+
+
+
+
+
 
     onSubmit(e)
     {
@@ -56,7 +109,7 @@ class Willy extends Component {
             })
 
 
-
+        this.getRows();
 
 
 
@@ -204,7 +257,39 @@ class Willy extends Component {
         this.onSubmit('x');
     }
 
+   setCookie(cname, cvalue, exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        var expires = "expires="+d.toUTCString();
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    }
 
+ getCookie(cname) {
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for(var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+
+ checkCookie() {
+        var user = this.getCookie("username");
+        if (user != "") {
+            alert("Welcome again " + user);
+        } else {
+            user = prompt("Please enter your name:", "");
+            if (user != "" && user != null) {
+                this.setCookie("username", user, 365);
+            }
+        }
+    }
 
     render() {
         // let kareninit=this.state.everthing['karen'];
@@ -218,6 +303,12 @@ class Willy extends Component {
         let BelmoreBuyerinit='Not a family member';
         let Cashinit=this.state.everthing['cash'];
         let reportstring= this.state.reportString.reportString;
+        let returnedRecs;
+            if (this.state.rowsReturned.length>0) {
+                console.log('rrfs2',this.state.rowsReturned);
+             returnedRecs   = this.LoopFeedback(this.state.rowsReturned);
+             console.log('rrfs',returnedRecs)
+            }
         console.log('RS',reportstring);
         return(
             <div style={{fontSize:"12px"}}>
@@ -351,10 +442,21 @@ class Willy extends Component {
 
                         <Row>
                             <Col sm><div>
-
                                 {reportstring}
                             </div></Col>
                         </Row>
+
+        <Row>
+        <Col sm><div>
+            {returnedRecs}
+
+
+
+
+        </div></Col>
+        </Row>
+
+
                         {/*    <input type="submit" value="Save values"/>*/}
                     </Container>
                 </form>

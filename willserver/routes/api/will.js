@@ -21,6 +21,26 @@ router.post('/', (req, res) => {
 
 });
 
+// @route   GET api/profile/all
+// @desc    Get all profiles
+// @access  Public
+router.get('/all', (req, res) => {
+    const errors = {};
+    WillTable.find()
+        .sort({ date: -1 })
+        .then(wills => res.json(wills))
+        .catch(err => res.status(404).json({ nopostsfound: 'No posts found' }));
+
+
+});
+//http://localhost:3001/api/will/hello
+router.get('/hello', (req, res) => {
+    res.send('Hello World!')
+});
+
+
+
+
 
 
 module.exports = router;
