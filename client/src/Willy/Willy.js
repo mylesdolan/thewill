@@ -8,12 +8,14 @@ class Willy extends Component {
     constructor(props) {
 
         super(props);
-        this.onSubmit = this.onSubmit.bind(this);
+        this.onSubmitPersonalComment = this.onSubmitPersonalComment.bind(this);
+        this.onSubmit2 = this.onSubmit2.bind(this);
         this.onChangeInput = this.onChangeInput.bind(this);
         this.onChangeBStreetOwn = this.onChangeBStreetOwn.bind(this);
         this.doCalcs= this.doCalcs.bind(this);
         this.getCookie= this.getCookie.bind(this);
         this.setCookie= this.setCookie.bind(this);
+        this.showCommentBox = this.showCommentBox.bind(this);
 
         this.state = {
             mylesInit: '1',
@@ -24,7 +26,9 @@ class Willy extends Component {
             everythingObj: {},
             reportString: '',
             bscount: '0',
-            rowsReturned: []
+            rowsReturned: [],
+            showCommentBox:false,
+            showCommentButton:false
         }
 
 
@@ -79,14 +83,32 @@ class Willy extends Component {
 
 
 
+                onSubmitPersonalComment(e)
+                {
+
+e.preventDefault();
+console.log('PCy',this.state.everythingObj);
+let xx=this.state.everythingObj;
+                    console.log('PCx',xx.PersonalComment);
+                    console.log('PCx',xx.comment);
+                    console.log('PCx',xx.comment+xx.PersonalComment);
+                    this.state.everythingObj['comment']=xx.comment+xx.PersonalComment;
+                    this.state.everythingObj['hidecomment']=false;
+                    this.onSubmit2('x');
+                    this.setState({showCommentBox: false});
+                    //console.log('PCx',this.state.everthing['comme'])
+                   // console.log('PCx',this.state.everthing['comment'])
+                }
 
 
 
-
-    onSubmit(e)
+    onSubmit2(e)
     {
+        //this.state.everythingObj[e.target.name]=e.target.value;
+console.log('HC5',this.state.everythingObj['hidecomment']);
       /////////////////////////////////  e.preventDefault();
-        /* */const requestBody = {
+        /* */
+                    const requestBody = {
         everything: this.state.everythingObj
         // mylesInit: this.state.karenInit;
     };
@@ -105,11 +127,12 @@ class Willy extends Component {
         axios.post('/api/will',this.state.everythingObj)
             .then(response => {
                 console.log("xxxxxxxxxxxxxxxxxxxxxutyy", response.data);
+        this.getRows();
                 //   this.setState({codeResponse: response.data});
             })
 
 
-        this.getRows();
+
 
 
 
@@ -150,9 +173,22 @@ class Willy extends Component {
     }
 
 
+               // showCommentBox(e)
+                showCommentBox()
+                {
+//e.preventDefault();
+                    console.log("ShowComment");
+                    // alert("Great Shot!");
+                    //  this.resetForms();
+                      this.setState({showCommentBox: true});
+                    this.setState({showCommentButton: false});
+
+                }
+
 
     doCalcs()
     {
+        this.state.everythingObj['hidecomment']=true;
         //(k+kp)+(m+mp)+(ma+map)+(ed+edp)=tot
         let allinint=this.state.everythingObj;
 
@@ -254,7 +290,9 @@ class Willy extends Component {
         console.log('allin',allinint);
         console.log('allin',reportString);
         this.state.everythingObj['comment']=reportString;
-        this.onSubmit('x');
+        this.onSubmit2('x');
+        this.setState({showCommentButton: true});
+       // this.showCommentButton();
     }
 
    setCookie(cname, cvalue, exdays) {
@@ -291,7 +329,18 @@ class Willy extends Component {
         }
     }
 
+
+
     render() {
+
+                                let commentBox;
+                    if (this.state.showCommentBox == true) {
+                    commentBox = <div>Hello</div>
+
+                }
+
+
+
         // let kareninit=this.state.everthing['karen'];
         let kareninit=this.state.everthing.karen;
         let mylesinit=this.state.everthing['myles'];
@@ -299,6 +348,18 @@ class Willy extends Component {
         let Eddieinit=this.state.everthing['eddie'];
         let Graniteinit=this.state.everthing['granite'];
         let Belmoreinit=this.state.everthing['belmore'];
+                  //  this.state.everythingObj['hidecomment']=true;
+
+//this.state.everything['hidecomment']=true;
+                    //this.state.everything.hidecomment=true;
+                 //   this.setstate({everything['hidecomment']:true});
+                    let commentinit=this.state.everthing['comme'];
+                   /* None of this worked.let commentinit2=this.state.everythingObj['comment'];
+                    let commentinit3;
+                    if (commentinit )
+                {
+                    commentinit3=commentinit.concat(commentinit2);
+                    console.log('ci3',commentinit3);}*/
         // let BelmoreBuyerinit=this.state.everthing['belmorebuyer'];
         let BelmoreBuyerinit='Not a family member';
         let Cashinit=this.state.everthing['cash'];
@@ -346,6 +407,11 @@ class Willy extends Component {
                                             onChange={this.onChangeInput}
                                         />K
                                     </label>
+
+
+
+
+
                                 </div>
 
                                 <div className='form-group form-inline'>
@@ -445,6 +511,76 @@ class Willy extends Component {
                                 {reportstring}
                             </div></Col>
                         </Row>
+
+                    <Row>
+                    <Col sm><div>
+                    {/*   <input
+                    type='submit' value="Submit query"
+
+                    />*/}
+
+                    </div></Col>
+                    </Row>
+                    <Row>
+                    <Col sm={3}>
+                    {this.state.showCommentButton === true ?   <div>
+                       <button onClick={this.showCommentBox}>Save and add your comment</button>
+                        </div>
+                        : null }
+                    {this.state.showCommentBox === true ?   <div>
+                        Happy Easter Eggs
+                            {/*      <form onSubmit={this.onSubmitPersonalComment}> */}
+
+                        <form>
+
+                            <div className='form-group form-inline'>
+                            <label>
+                                Comment Maker:
+                                <select name={'CommentMaker'} value={this.state.BelmoreBuyerinit} onChange={this.onChangeInput}>
+                                    <option value="Matth">Matthew</option>
+                                    <option value="Eddie">Edward</option>
+                                    <option value="Karen">Karen</option>
+                                    <option value="Myles">Myles</option>
+                                    <option value="notfamily" selected>Not a family member</option>
+                                </select>
+                            </label>
+
+                            <b> Comment</b> <br/>
+
+
+                                <label htmlFor={'Comment'}>Comment:
+
+                                    < textarea
+                                        value = {commentinit}
+                                        rows={12}
+                                        cols={50}
+                                        onChange={this.onChangeInput}
+                                        name={'PersonalComment'}
+
+                                        id={'PersonalComment'}
+                                    />
+
+                                </label>
+
+                            </div>
+                            {/*   <input
+                                type='submit' value="Submit query"
+
+                            />*/}
+                        </form>
+                        <button onClick={this.onSubmitPersonalComment}>Save </button>
+                    </div>: null }
+
+
+
+                        </Col>
+                        </Row>
+
+
+
+
+
+
 
         <Row>
         <Col sm><div>
